@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./styles.css">
+    <title>Responsive NFT Website</title>
+</head>
+
+<body>
+    <nav>
+        <a href="#" class="logo">FiFa Arab</a>
+        <div class="links">
+            <a href="#">Home</a>
+            <a href="#">Apply</a>
+            <a href="#">About Us</a>
+        </div>
+        <div id="loginContainer" class="login">
+            <!-- سيتم تحديث محتوى هذا العنصر بناءً على حالة تسجيل الدخول -->
+            <!-- سيتم إضافة محتوى ديناميكي هنا عبر الجافا سكريبت -->
+        </div>
+    </nav>
+
+    <header>
+        <div class="left">
+            <h1>FIFA ARAB <span>Never Die</span></h1>
+            <p> Welcome To FiFa Arab Your PLace To show your playing style
+            </p>
+            <a href="">
+                <i class='bx bxs-dashboard'></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- باقي محتوى الصفحة -->
+
+    <footer>
+        <h3>Get creative, your best place to highlight your talent</h3>
+        <div class="right">
+            <div class="links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <p>FiFa Arab © 2024 Y2shin.Dev, All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // التحقق من حالة تسجيل الدخول عند تحميل الصفحة
+        window.onload = async () => {
+            try {
+                const response = await fetch('/checkLogin');
+                const data = await response.json();
+                const loginContainer = document.getElementById('loginContainer');
+
+                if (data.loggedIn) {
+                    // عرض ملف الشخصي للمستخدم المسجل دخول
+                    loginContainer.innerHTML = `
+                        <div class="profile">
+                            <img src="${data.avatar}" alt="avatar" class="avatar">
+                            <span class="username">${data.username}</span>
+                            <div class="dropdown">
+                                <button class="dropbtn">▼</button>
+                                <div class="dropdown-content">
+                                    <a href="#">Profile</a>
+                                    <a href="#">Settings</a>
+                                    <a href="/logout">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // عرض زر "Login" في حالة عدم تسجيل الدخول
+                    loginContainer.innerHTML = `<button id="loginButton" class="signup" onclick="window.location.href = '/login';">Login</button>`;
+                }
+            } catch (error) {
+                console.error("Error fetching login status:", error);
+            }
+        };
+    </script>
+</body>
+
+</html>
